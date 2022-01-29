@@ -6,6 +6,7 @@
 uniform float SCR_HEI;
 uniform float SCR_WID;
 uniform vec2 mouse;
+
 void main()
 {
 

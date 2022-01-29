@@ -65,7 +65,7 @@ int main() {
 	glUniform1f(glGetUniformLocation(shader.rendererID, "SCR_WID"), float(width));
 	double mx = 2 * (MouseX / width) - 1.0;
 	double my = 2 * (MouseY / height) - 1.0;
-	glUniform2fv(glGetUniformLocation(shader.rendererID, "SCR_WID"), 1, MathLib::vec2(mx, my).value_ptr());
+	glUniform2fv(glGetUniformLocation(shader.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
 
 
 	shader.bind();
@@ -81,8 +81,9 @@ int main() {
 		shader.bind();
 		glUniform1f(glGetUniformLocation(shader.rendererID, "SCR_HEI"), float(height));
 		glUniform1f(glGetUniformLocation(shader.rendererID, "SCR_WID"), float(width));
-		glUniform2fv(glGetUniformLocation(shader.rendererID, "SCR_WID"), 1, MathLib::vec2(mx,my).value_ptr());
-
+		mx = 2 * (MouseX / width) - 1.0;
+		my = 2 * (MouseY / height) - 1.0;
+		glUniform2fv(glGetUniformLocation(shader.rendererID, "mouse"), 1, MathLib::vec2(mx,my).value_ptr());
 		shader.unbind();
 
 		renderer.draw(va, indexBuffer, shader);
