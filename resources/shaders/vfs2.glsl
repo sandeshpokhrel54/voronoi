@@ -17,16 +17,18 @@ void main()
 
 
 
-    //hardcoded points
-    points[0] = vec2(0.83,0.75);
+    //hardcoded points they take fragment coordinates starting i.e 0,0 is bottom left
+    points[0] = vec2(0.83,0.182);
     points[1] = vec2(0.50,0.7);
-    points[2] = vec2(0.28,0.64);
+    points[2] = vec2(0.141,0.64);
     points[3] =  vec2(0.31,0.26);
-    points[4] = mouse;
+    points[4] = vec2( 0.5*(mouse.x+1.0),0.5*(mouse.y+1));
 
 
     float aspectRatio = SCR_WID/SCR_HEI;
     vec2 current = vec2(gl_FragCoord.x/ SCR_WID, gl_FragCoord.y/SCR_HEI);
+    //current.x *= aspectRatio;
+    //current.y *= aspectRatio;
     float currentDis;
 
     for(int i=0; i<5; i++)

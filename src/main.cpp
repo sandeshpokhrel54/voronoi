@@ -40,6 +40,7 @@ int main() {
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 
 	Shader shader("./resources/shaders/vor2vs.glsl", "./resources/shaders/vfs2.glsl");
+	Shader movingVor("./resources/shaders/vor1vs.glsl", "./resources/shaders/vfs2.glsl");
 
 	float vertices[] = {
 		-1.0f, -1.0f,
@@ -61,16 +62,21 @@ int main() {
 	va.addBuffer(vb, vbLayout);
 
 
+
+
+	shader.bind();
 	glUniform1f(glGetUniformLocation(shader.rendererID,"SCR_HEI"),float(height));
 	glUniform1f(glGetUniformLocation(shader.rendererID, "SCR_WID"), float(width));
 	double mx = 2 * (MouseX / width) - 1.0;
 	double my = 2 * (MouseY / height) - 1.0;
 	glUniform2fv(glGetUniformLocation(shader.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
-
-
-	shader.bind();
 	shader.unbind();
 
+
+	movingVor.bind();
+	glUniform1f(glGetUniformLocation(movingVor.rendererID, "SCR_HEI"), float(height));
+	glUniform1f(glGetUniformLocation(movingVor.rendererID, "SCR_WID"), float(width));
+	movingVor.unbind();
 
 	while (!glfwWindowShouldClose(window)){
 		glClearColor(0.3f, 0.3f, 0.2f, 1.0f);
