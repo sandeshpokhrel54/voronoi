@@ -41,7 +41,7 @@ void main()
         }
     }
 
-    color += dist*0.5;
+    color += dist;
     color.x = minpoint.x;
     color.y = minpoint.y;
     color += 1.-step(.01, dist);

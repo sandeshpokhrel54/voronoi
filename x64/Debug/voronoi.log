@@ -1,6 +1,7 @@
 ﻿  main.cpp
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(72,86): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(72,82): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(92,86): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(92,83): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(74,86): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(74,82): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(97,86): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(97,83): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   voronoi.vcxproj -> C:\Users\sande\OneDrive\Documents\Graphics\voronoi\x64\Debug\voronoi.exe

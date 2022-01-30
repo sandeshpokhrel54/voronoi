@@ -20,8 +20,9 @@ int main() {
 	float aspectRatio = float(width) / float(height);
 	GLFWwindow* window = glfwCreateWindow(width, height, "Voronoi", NULL, NULL);
 	
-	//mouse button callback
-	void mouse_button_callback(GLFWwindow * window, int button, int action, int mods);
+	//mouse button/cursor callback
+	//void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+	void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 
 	//open gl settings
 	glfwWindowHint(GLFW_VERSION_MAJOR, 4);
@@ -37,7 +38,8 @@ int main() {
 
 	glfwSetWindowUserPointer(window, &context);
 	glfwSetScrollCallback(window, scrollCallBack);
-	glfwSetMouseButtonCallback(window, mouse_button_callback);
+	//glfwSetMouseButtonCallback(window, mouse_button_callback);
+	glfwSetCursorPosCallback(window, cursor_position_callback);
 
 	Shader shader("./resources/shaders/vor2vs.glsl", "./resources/shaders/vfs2.glsl");
 	Shader movingVor("./resources/shaders/vor1vs.glsl", "./resources/shaders/vfs2.glsl");
@@ -73,14 +75,17 @@ int main() {
 	shader.unbind();
 
 
-	movingVor.bind();
-	glUniform1f(glGetUniformLocation(movingVor.rendererID, "SCR_HEI"), float(height));
-	glUniform1f(glGetUniformLocation(movingVor.rendererID, "SCR_WID"), float(width));
-	movingVor.unbind();
+	//movingVor.bind();
+	//glUniform1f(glGetUniformLocation(movingVor.rendererID, "SCR_HEI"), float(height));
+	//glUniform1f(glGetUniformLocation(movingVor.rendererID, "SCR_WID"), float(width));
+	//movingVor.unbind();
+
+	int cursor = 0;
 
 	while (!glfwWindowShouldClose(window)){
 		glClearColor(0.3f, 0.3f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
 
 		UserContext *context = (UserContext *)glfwGetWindowUserPointer(window);
 
@@ -101,15 +106,19 @@ int main() {
 }
 
 
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+//void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+//{
+//	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+//	{
+//		glfwGetCursorPos(window, &MouseX, &MouseY);
+//		//double mx = 2 * (MouseX / width) - 1.0;
+//		//double my = -(2 * (MouseY / height) - 1.0);
+//		//std::cout << "mx " << MouseX<<" "<<mx << " my " << MouseY<< " "<<my<<"\n";
+//	}
+//}
+
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-	{
-
-		glfwGetCursorPos(window, &MouseX, &MouseY);
-		double mx = 2 * (MouseX / width) - 1.0;
-		double my = -(2 * (MouseY / height) - 1.0);
-		std::cout << "mx " << MouseX<<" "<<mx << " my " << MouseY<< " "<<my<<"\n";
-
-	}
+	glfwGetCursorPos(window, &MouseX, &MouseY);
 }
+
