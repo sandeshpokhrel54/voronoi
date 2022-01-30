@@ -19,7 +19,7 @@ void main()
 
     //hardcoded points
     points[0] = vec2(0.83,0.75);
-    points[1] = vec2(0.60,0.07);
+    points[1] = vec2(0.50,0.7);
     points[2] = vec2(0.28,0.64);
     points[3] =  vec2(0.31,0.26);
     points[4] = mouse;
