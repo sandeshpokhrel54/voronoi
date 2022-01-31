@@ -44,7 +44,7 @@ void main()
     color += dist;
     color.x = minpoint.x;
     color.y = minpoint.y;
-    color += 1.-step(.01, dist);
+    color += 1.-step(.005, dist);
 
     gl_FragColor = vec4(color,1.0f);
     //FragColor = vec4(st.x, st.y, 0.0f, 1.0f);

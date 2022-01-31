@@ -5,7 +5,7 @@
 #include "Math/matrix.h"
 #include "Math/vec.h"
 
-const int width = 800, height = 600;
+const int width = 1980, height = 1080;
 double MouseX, MouseY;
 
 int main() {
