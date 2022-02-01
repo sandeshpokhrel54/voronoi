@@ -1,94 +1,68 @@
 #version 460 core
 
-#define MAX_ITERATION 100000
+out vec4 FragColor;
 
-out vec4 color;
+uniform float SCR_HEI;
+uniform float SCR_WID;
+uniform vec2 mouse;
+uniform vec2 time;
 
-uniform vec2 rectMin;
-uniform vec2 rectMax;
-uniform float width;
-uniform float height;
+void main()
+{
 
-struct Complex {
-	float real, imag;
-};
+    vec3 color = vec3(0.0, 1.0, 0.0); 
+    vec2 points[10];
+    vec2 minpoint = vec2(0.0,0.0);
+    float dist = 1.0;
 
-// #define magnitude(a) sqrt(a.x * a.x + a.y * a.y)
+    vec2 tp = 0.7*sin(time);
 
-float magnitude(vec2 v) {
-	return pow(v.x * v.x + v.y * v.y, 0.5f);
-}
+    //hardcoded points they take fragment coordinates starting i.e 0,0 is bottom left
 
-#define mulitply(a, b) vec2(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x)
-#define divide(a, b) vec2(a.x * b.x + a.y * b.y, - a.x * b.y + a.y * b.x) / (b.x * b.x + b.y * b.y)
-
-vec2 cpow(vec2 v, float e) {
-	vec2 res = v;
-	for (int i = 1; i < e; i++) {
-		res = mulitply(res, v);
-	}
-	return res;
-
-	// float radius = magnitude(v);
-	// radius = pow(radius, e);
-	// float theta = atan(v.y / v.x);
-	// theta *= e;
-	// vec2 res;
-	// res.x = radius * cos(theta);
-	// res.y = radius * sin(theta);
-
-	// return res;
-}
-
-vec2 func(vec2 c) {
-	// vec2 res = mulitply(c, c);
-	// res = mulitply(res, c) - vec2(1.0f, 0.0f);
-	return cpow(c, 3) - vec2(1.0f, 0.0f);
-	// return res;
-}
-
-vec2 derivative(vec2 c) {
-	vec2 res = 3 * mulitply(c, c);
-	return 3 * cpow(c, 2);
-}
+    //making points dependent on points[4] i.e mouse motion
+    //points[4] = points[4] = vec2(0.5*(mouse.x+1.0),0.5*(mouse.y+1));
+    //points[0] = 0.5 + 0.314*sin(1.68*points[4]);
+    //points[1] = vec2(0.20+points[4].x,0.2+points[4].y);
+    //points[1] = 0.5 + 0.5*cos(2.7182*points[4]);
+    //points[2] = 0.5 + 0.5*sin(3.141*points[4]);
+    //points[3] = tp;
+    //points[3] = 0.5 + 0.314*cos(6.18*points[4]);
+    //points[4] = vec2(0.5*(mouse.x+1.0),0.5*(mouse.y+1));
+    //points[4] = vec2(0.2,0.1);
+    
+    //for animated points with time
+    points[0] = 0.2+ cos(time*0.122);
+    points[1] =  0.2+ sin(time*0.31);
+    points[2] = 0.5 + tp*0.5;
+    points[3] = vec2(0.31,0.26)+cos(tp*0.618);
+    points[4] = vec2(0.5, 0.5);
+    points[5] = vec2(0.5*(mouse.x+1.0),0.5*(mouse.y+1));
+    points[6] = points[5] * 0.01*tp;
+    points[7] = points[5].x * points[6];
+    points[8] = 0.5+0.5*cos(1.68*time);
+    points[9] = 0.02*time;
 
 
-out vec2 z;
+    float aspectRatio = SCR_WID/SCR_HEI;
+    vec2 current = vec2(gl_FragCoord.x/ SCR_WID, gl_FragCoord.y/SCR_HEI);
+    float currentDis;
 
-uniform vec2 roots[3];
-uniform vec3 colors[3];
+    for(int i=0; i<10; i++)
+    {
+        currentDis = distance(current, points[i]);
+        if(dist>currentDis)
+        {
+            dist = currentDis;
+            minpoint = points[i];
+        }
+    }
 
+    color += dist;
+    color.x = minpoint.x;
+    color.y = minpoint.y;
+    color += 1.-step(.002, dist);
 
-vec3 newtonFractal(inout vec2 z, inout int iteration) {
-	iteration = 0;
-	vec2 a = vec2(1, 0);
-	while (iteration < MAX_ITERATION) {
-		vec2 step = divide(func(z), derivative(z));
-		z = z - mulitply(a, step);
+    //gl_FragColor = vec4(color,1.0f);
+    FragColor = vec4(color, 1.0f);
 
-		double tolerance = 0.000000000001;
-
-		for (int i = 0; i < 3; i++) {
-			vec2 diff = z - roots[i];
-
-			//If the current iteration is close enough to a root, color the pixel.
-			if (magnitude(diff) < tolerance) {
-				return colors[i]; //Return the color corresponding to the root
-			}
-		}
-
-		iteration += 1;
-	}
-
-	return vec3(0.3, 0.3, 0.3);
-}
-
-void main() {
-	vec2 st = vec2(gl_FragCoord.x / width, gl_FragCoord.y / height);
-	float aspectRatio = width / height;
-	int iteration = 0;
-	z = rectMin + (rectMax - rectMin) * st * vec2(aspectRatio, 1);
-	vec3 fractalColor = newtonFractal(z, iteration);
-	color = vec4(fractalColor / iteration * 20, 1.0f);
-	// color = vec4(magnitude(cpow(vec2(0.5, 0.5), 1)));
 }

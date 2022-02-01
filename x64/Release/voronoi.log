@@ -1,0 +1,11 @@
+﻿  main.cpp
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(79,86): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(79,82): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(114,87): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(114,84): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+     Creating library C:\Users\sande\OneDrive\Documents\Graphics\voronoi\x64\Release\voronoi.lib and object C:\Users\sande\OneDrive\Documents\Graphics\voronoi\x64\Release\voronoi.exp
+  Generating code
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+  All 347 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  voronoi.vcxproj -> C:\Users\sande\OneDrive\Documents\Graphics\voronoi\x64\Release\voronoi.exe

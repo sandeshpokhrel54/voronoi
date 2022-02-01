@@ -1,7 +1,7 @@
 #version 460 core
 
 //layout(pixel_center_integer) in vec4 gl_FragCoord;
-//out vec4 FragColor;
+out vec4 FragColor;
 
 uniform float SCR_HEI;
 uniform float SCR_WID;
@@ -18,7 +18,7 @@ void main()
 
 
     //hardcoded points they take fragment coordinates starting i.e 0,0 is bottom left
-    points[0] = vec2(0.83,0.182);
+    points[0] = vec2(0.80,0.182);
     points[1] = vec2(0.50,0.7);
     points[2] = vec2(0.141,0.64);
     points[3] =  vec2(0.31,0.26);
@@ -34,6 +34,7 @@ void main()
     for(int i=0; i<5; i++)
     {
         currentDis = distance(current, points[i]);
+        //dist = min(dist,currentDis);
         if(dist>currentDis)
         {
             dist = currentDis;
@@ -44,9 +45,9 @@ void main()
     color += dist;
     color.x = minpoint.x;
     color.y = minpoint.y;
-    color += 1.-step(.005, dist);
+    color += 1.-step(.002, dist);
 
-    gl_FragColor = vec4(color,1.0f);
-    //FragColor = vec4(st.x, st.y, 0.0f, 1.0f);
+    //gl_FragColor = vec4(color,1.0f);
+    FragColor = vec4(color, 1.0f);
 
 }

@@ -1,5 +1,5 @@
 #version 460 core
-//out vec4 FragColor;
+out vec4 FragColor;
 
 uniform float SCR_HEI;
 uniform float SCR_WID;
@@ -60,7 +60,7 @@ void main()
    //draw grid
    color.r += step(.98, f_current.x) + step(.98, f_current.y);
 
-    gl_FragColor = vec4(color,1.0f);
-    //FragColor = vec4(st.x, st.y, 0.0f, 1.0f);
+    //gl_FragColor = vec4(color,1.0f);
+    FragColor = vec4(color, 1.0f);
 
 }
