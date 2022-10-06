@@ -17,6 +17,14 @@ void main()
 
 
     //hardcoded points they take fragment coordinates starting i.e 0,0 is bottom left
+    
+    //a point having x and y coordinates,
+    //consider each point has a vector with velocity and direction
+    //now calculate the time needed to reach any pixel from that point with its velocity and direction  
+    //time = distance/velocity
+
+
+    //for now assuming x and y coordinates to be same as velocity in x-direction and y-direction
     points[0] = vec2(0.80,0.182);
     points[1] = vec2(0.50,0.7);
     points[2] = vec2(0.141,0.64);
@@ -24,34 +32,29 @@ void main()
     points[4] = vec2( 0.5*(mouse.x+1.0),0.5*(mouse.y+1));
 
 
+    
     float aspectRatio = SCR_WID/SCR_HEI;
     vec2 current = vec2(gl_FragCoord.x/ SCR_WID, gl_FragCoord.y/SCR_HEI);
-    //current.x *= aspectRatio;
-    //current.y *= aspectRatio;
     float currentDis;
 
-    vec2 pluspoints = vec2(0.0);
     for(int i=0; i<5; i++)
     {
-        currentDis = distance(current, points[i]);
-        //dist = min(dist,currentDis);
+        currentDis = distance(current, points[i])/sqrt(points[i].x * points[i].x + points[i].y * points[i].y);
         if(dist>currentDis)
         {
-            dist = currentDis;
+            dist = currentDis/sqrt(points[i].x*points[i].x + points[i].y*points[i].y);
             minpoint = points[i];
-            //pluspoints.x = points[i].x * 0.2;
-            //pluspoints.y = points[i].y * 0.2;
 
         }
     }
 
+    //distance field
     color += dist;
     //this for respective points
-    color.x += minpoint.x; //+ pluspoints.x;
-    color.y += minpoint.y; //+ pluspoints.y;
-
+    color.x = minpoint.x; 
+    color.y = minpoint.y; 
     //for dot
-    color += 1.0- smoothstep(0.001,.005, dist); 
+    color += 1.0- step(0.002, dist); 
 
     //gl_FragColor = vec4(color,1.0f);
     FragColor = vec4(color, 1.0f);
