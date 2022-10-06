@@ -171,8 +171,10 @@
     <None Include="resources\shaders\PixelShader.glsl" />
     <None Include="resources\shaders\VertexShader.glsl" />
     <None Include="resources\shaders\vfs1.glsl" />
+    <None Include="resources\shaders\vfs3.glsl" />
     <None Include="resources\shaders\vfs2.glsl" />
     <None Include="resources\shaders\vor1vs.glsl" />
+    <None Include="resources\shaders\vor3vs.glsl" />
     <None Include="resources\shaders\vor2vs.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

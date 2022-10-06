@@ -49,6 +49,7 @@ int main() {
 	Shader shader("./resources/shaders/vor2vs.glsl", "./resources/shaders/vfs2.glsl");
 	Shader movingVor("./resources/shaders/vor1vs.glsl", "./resources/shaders/vfs1.glsl");
 	Shader motion("./resources/shaders/VertexShader.glsl", "./resources/shaders/PixelShader.glsl");
+	Shader test("./resources/shaders/vor3vs.glsl", "./resources/shaders/vfs3.glsl");
 
 	float vertices[] = {
 		-1.0f, -1.0f,
@@ -71,12 +72,12 @@ int main() {
 
 
 
+	double mx = 2 * (MouseX / width) - 1.0;
+	double my = -2 * (MouseY / height) - 1.0;
 
 	shader.bind();
 	glUniform1f(glGetUniformLocation(shader.rendererID,"SCR_HEI"),float(height));
 	glUniform1f(glGetUniformLocation(shader.rendererID, "SCR_WID"), float(width));
-	double mx = 2 * (MouseX / width) - 1.0;
-	double my = -2 * (MouseY / height) - 1.0;
 	glUniform2fv(glGetUniformLocation(shader.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
 	shader.unbind();
 
@@ -91,11 +92,15 @@ int main() {
 	motion.bind();
 	glUniform1f(glGetUniformLocation(motion.rendererID, "SCR_HEI"), float(height));
 	glUniform1f(glGetUniformLocation(motion.rendererID, "SCR_WID"), float(width));
-	mx = 2 * (MouseX / width) - 1.0;
-	my = -2 * (MouseY / height) - 1.0;
 	glUniform2fv(glGetUniformLocation(shader.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
 	glUniform1fv(glGetUniformLocation(motion.rendererID, "movingP"), 1, MathLib::vec2(float(glfwGetTime()), float(glfwGetTime())).value_ptr());
 	motion.unbind();
+
+	test.bind();
+	glUniform1f(glGetUniformLocation(test.rendererID, "SCR_HEI"), float(height));
+	glUniform1f(glGetUniformLocation(test.rendererID, "SCR_WID"), float(width));
+	glUniform2fv(glGetUniformLocation(test.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
+	test.unbind();
 
 
 	int animated = 0;
@@ -114,6 +119,9 @@ int main() {
 
 		if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
 			animated = 0;
+
+		if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
+			animated = 3;
 
 
 		UserContext *context = (UserContext *)glfwGetWindowUserPointer(window);
@@ -140,6 +148,17 @@ int main() {
 			glUniform1f(glGetUniformLocation(movingVor.rendererID, "time"), float(glfwGetTime()));
 			movingVor.unbind();
 			renderer.draw(va, indexBuffer, movingVor);
+		}
+
+		else if (animated == 3){
+			test.bind();
+			glUniform1f(glGetUniformLocation(test.rendererID, "SCR_HEI"), float(height));
+			glUniform1f(glGetUniformLocation(test.rendererID, "SCR_WID"), float(width));
+			mx = 2 * (MouseX / width) - 1.0;
+			my = -(2 * (MouseY / height) - 1.0);
+			glUniform2fv(glGetUniformLocation(test.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
+			test.unbind();
+			renderer.draw(va, indexBuffer, test);
 		}
 		
 		else

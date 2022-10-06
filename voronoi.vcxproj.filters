@@ -88,5 +88,11 @@
     <None Include="resources\shaders\vor2vs.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="resources\shaders\vfs3.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resources\shaders\vor3vs.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
