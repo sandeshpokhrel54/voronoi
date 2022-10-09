@@ -13,7 +13,7 @@ void main()
     vec3 color = vec3(0.0, 0.0, 0.0);
     vec2 points[5];
     vec2 minpoint = vec2(0.0,0.0);
-    float dist = 1.0;
+    float t = 5.0;
 
 
     //hardcoded points they take fragment coordinates starting i.e 0,0 is bottom left
@@ -31,30 +31,49 @@ void main()
     points[3] =  vec2(0.31,0.26);
     points[4] = vec2( 0.5*(mouse.x+1.0),0.5*(mouse.y+1));
 
+    //associated color with each point
+    vec3 ranga[5];
+    ranga[0] = vec3(0.8, 0.2, 0.2);
+    ranga[1] = vec3(0.2, 0.8, 0.2);
+    ranga[2] = vec3(0.2, 0.2, 0.8);
+    ranga[3] = vec3(0.8, 0.8, 0.1);
+    ranga[4] = vec3(0.8, 0.1, 0.8);
+    //define velocities of each of the point
+    vec2 velocity[5];
+    velocity[0] = vec2(0.11, 0.2); 
+    velocity[1] = vec2(0.2, 0.2);
+    velocity[2] = vec2(0.3, 0.3);
+    velocity[3] = vec2(0.32, 0.2);
+    velocity[4] = vec2(0.1, 0.1);
+
 
     
     float aspectRatio = SCR_WID/SCR_HEI;
     vec2 current = vec2(gl_FragCoord.x/ SCR_WID, gl_FragCoord.y/SCR_HEI);
-    float currentDis;
+    float time;
+    int minpoint_index;
 
     for(int i=0; i<5; i++)
     {
-        currentDis = distance(current, points[i])/sqrt(points[i].x * points[i].x + points[i].y * points[i].y);
-        if(dist>currentDis)
+        time = distance(current, points[i])/length(velocity[i]);
+        if(t>time)
         {
-            dist = currentDis/sqrt(points[i].x*points[i].x + points[i].y*points[i].y);
+            t = time;
             minpoint = points[i];
+            minpoint_index = i;
 
         }
     }
 
-    //distance field
-    color += dist;
+    //time field
+    //color += t;
     //this for respective points
-    color.x = minpoint.x; 
-    color.y = minpoint.y; 
+    //color = ranga[minpoint_index];
+    color.x = minpoint.x;
+    color.y = minpoint.y;
+    
     //for dot
-    color += 1.0- step(0.002, dist); 
+    color += 1.0 - step(0.002, t); 
 
     //gl_FragColor = vec4(color,1.0f);
     FragColor = vec4(color, 1.0f);
