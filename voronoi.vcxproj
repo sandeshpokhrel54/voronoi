@@ -169,6 +169,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\PixelShader.glsl" />
+    <None Include="resources\shaders\playfs.glsl" />
+    <None Include="resources\shaders\playvs.glsl" />
     <None Include="resources\shaders\VertexShader.glsl" />
     <None Include="resources\shaders\vfs1.glsl" />
     <None Include="resources\shaders\vfs3.glsl" />

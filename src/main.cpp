@@ -4,6 +4,10 @@
 #include <Renderer.h>
 #include "Math/matrix.h"
 #include "Math/vec.h"
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <vector>
 
 const int width = 1980, height = 1080;
 double MouseX, MouseY;
@@ -12,6 +16,57 @@ double MouseX, MouseY;
 //{
 //	__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001;
 //}
+
+
+struct DataPoint {
+	std::string column1;
+	std::string column2;
+};
+
+std::vector<DataPoint> readball(const std::string& filename) {
+	std::vector<DataPoint> data;
+	std::ifstream file(filename);
+	std::string line;
+	DataPoint dataPoint;
+
+	while (std::getline(file, line)) {
+
+
+		std::stringstream ss(line);
+		std::string item;
+
+		// Read the first column
+		// std::getline(ss, item, ',');
+		// dataPoint.column1 = item;
+
+		if (std::getline(ss, item, ',')) {
+			dataPoint.column1 = std::string(item);
+		}
+		else {
+			std::cout << "Error reading column 1 in line: " << line << std::endl;
+			continue;
+		}
+
+		// // Read the second column
+		if (std::getline(ss, item, ',')) {
+			dataPoint.column2 = std::string(item);
+		}
+		else {
+			std::cout << "Error reading column 2 in line: " << line << std::endl;
+			continue;
+		}
+		// std::getline(ss, item, ',');
+		// dataPoint.column2 = item;
+		// std::cout<<dataPoint.column1<<" "<<dataPoint.column2<<"\n";
+
+		// std::cout<<"pushed";
+		data.push_back(dataPoint);
+	}
+	file.close();
+	return data;
+}
+
+
 
 int main() {
 	glfwInit();
@@ -50,6 +105,7 @@ int main() {
 	Shader movingVor("./resources/shaders/vor1vs.glsl", "./resources/shaders/vfs1.glsl");
 	Shader motion("./resources/shaders/VertexShader.glsl", "./resources/shaders/PixelShader.glsl");
 	Shader test("./resources/shaders/vor3vs.glsl", "./resources/shaders/vfs3.glsl");
+	Shader ball("./resources/shaders/playvs.glsl", "./resources/shaders/playfs.glsl");
 
 	float vertices[] = {
 		-1.0f, -1.0f,
@@ -102,13 +158,21 @@ int main() {
 	glUniform2fv(glGetUniformLocation(test.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
 	test.unbind();
 
+	ball.bind();
+	glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_HEI"), float(height));
+	glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_WID"), float(width));
+	glUniform2fv(glGetUniformLocation(ball.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
+	ball.unbind();
+	
+	//ball position data
+	std::vector<DataPoint> balldata = readball("./resources/ballpos.csv");
+	short int bcount = 0;
 
 	int animated = 0;
 
 	while (!glfwWindowShouldClose(window)){
 		glClearColor(0.3f, 0.3f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
 
 		//change shader based on key
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
@@ -123,9 +187,11 @@ int main() {
 		if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
 			animated = 3;
 
+		if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS)
+			animated = 4;
+
 
 		UserContext *context = (UserContext *)glfwGetWindowUserPointer(window);
-
 
 		if (animated==0)
 		{
@@ -160,8 +226,33 @@ int main() {
 			test.unbind();
 			renderer.draw(va, indexBuffer, test);
 		}
+
+		else if (animated == 4)
+		{
+			ball.bind();
+			glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_HEI"), float(height));
+			glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_WID"), float(width));
+			
+			//reset if more than datasize reset
+			//bcount = 0 ? bcount >= balldata.size() : bcount++;
+			// the data is in resolution 3840 × 2160
+			if (bcount < balldata.size())
+			{
+				mx = 2 * std::stod(balldata[bcount].column1) / 3840 - 1.0;
+				my = 2 * std::stod(balldata[bcount].column2) / 2160 - 1.0;
+				bcount++;
+			}
+			else
+				bcount = 0;
+
+			//std::cout << bcount << "\t" << balldata[bcount].column1 << "\t" << balldata[bcount].column2 << std::endl;
+			std::cout << bcount << "\t" << mx << "\t" << my << std::endl;
+			glUniform2fv(glGetUniformLocation(ball.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
+			ball.unbind();
+			renderer.draw(va, indexBuffer, ball);
+		}
 		
-		else
+		else if (animated==2)
 		{
 			motion.bind();
 			glUniform1f(glGetUniformLocation(motion.rendererID, "SCR_HEI"), float(height));

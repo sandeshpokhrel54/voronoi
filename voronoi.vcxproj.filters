@@ -94,5 +94,11 @@
     <None Include="resources\shaders\vor3vs.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="resources\shaders\playfs.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resources\shaders\playvs.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
