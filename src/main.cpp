@@ -199,11 +199,14 @@ int main() {
 
 	double testpx=-0.5;
 	double testpy=0.0;
+	MathLib::vec2 playerpos[11];
 	ball.bind();
 	glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_HEI"), float(height));
 	glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_WID"), float(width));
 	glUniform2fv(glGetUniformLocation(ball.rendererID, "ball"), 1, MathLib::vec2(mx, my).value_ptr());
-	glUniform2fv(glGetUniformLocation(ball.rendererID, "player"), 1, MathLib::vec2(testpx, testpy).value_ptr());
+	//glUniform2fv(glGetUniformLocation(ball.rendererID, "player"), 1, MathLib::vec2(testpx, testpy).value_ptr());
+	glUniform2fv(glGetUniformLocation(ball.rendererID, "team1"), 11, playerpos->value_ptr());
+
 	ball.unbind();
 	
 	//ball position data
@@ -278,23 +281,32 @@ int main() {
 			glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_HEI"), float(height));
 			glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_WID"), float(width));
 			
+			
 			// the data is in resolution 3840 × 2160
 			if (bcount < balldata.size())
 			{
-
+				//ball data
 				mx = 2 * std::stod(balldata[bcount].column1) / 3840 - 1.0;
 				my = 2 * std::stod(balldata[bcount].column2) / 2160 - 1.0;
 
-				testpx = 2 * std::stod(playersData[bcount][0].column1) / 3840 - 1.0;
-				testpy = 2 * std::stod(playersData[bcount][0].column2) / 2160 - 1.0;
+				//player movement data 
+
+				for (unsigned int k = 0; k < 11; k++)
+				{
+					testpx = 2 * std::stod(playersData[bcount][k].column1) / 3840 - 1.0;
+					testpy = 2 * std::stod(playersData[bcount][k].column2) / 2160 - 1.0;
+					playerpos[k] = MathLib::vec2(testpx, testpy);
+				}
+				
 				bcount++;
 			}
 			else
 				bcount = 0;
 
-			std::cout << bcount << "\t" << testpx << "\t" << testpy << std::endl;
+			//std::cout << bcount << "\t" << testpx << "\t" << testpy << std::endl;
 			glUniform2fv(glGetUniformLocation(ball.rendererID, "ball"), 1, MathLib::vec2(mx, my).value_ptr());
-			glUniform2fv(glGetUniformLocation(ball.rendererID, "player"), 1, MathLib::vec2(testpx, testpy).value_ptr());
+			//glUniform2fv(glGetUniformLocation(ball.rendererID, "player"), 1, MathLib::vec2(testpx, testpy).value_ptr());
+			glUniform2fv(glGetUniformLocation(ball.rendererID, "team1"), 11, playerpos->value_ptr());
 			ball.unbind();
 			renderer.draw(va, indexBuffer, ball);
 		}
