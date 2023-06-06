@@ -11,11 +11,10 @@ uniform vec2 team2[11];
 void main()
 {
 
-    vec3 color = vec3(0.0, 1.0, 0.0);
+    vec3 color = vec3(136.0/255.0, 190.0/255.0, 119.0/255.0);
     vec2 points[23];
     vec2 minpoint = vec2(0.0, 0.0);
     float dist = 1.0;
-
 
 
     //hardcoded points they take fragment coordinates starting i.e 0,0 is bottom left
@@ -51,11 +50,14 @@ void main()
             dist = currentDis;
             minpoint = points[i];
         }
+
+ 
     }
 
     color += dist;
-    color.x = minpoint.x;
-    color.y = minpoint.y;
+    //color.x = 0.4*minpoint.x;
+    //color.z = 0.4*minpoint.y;
+
 
     color += 1. - step(.002, dist);
 
