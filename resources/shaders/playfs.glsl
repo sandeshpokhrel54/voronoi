@@ -5,7 +5,8 @@ out vec4 FragColor;
 
 uniform float SCR_HEI;
 uniform float SCR_WID;
-uniform vec2 mouse;
+uniform vec2 ball;
+uniform vec2 player;
 
 void main()
 {
@@ -21,8 +22,8 @@ void main()
     points[0] = vec2(0.80, 0.182);
     points[1] = vec2(0.50, 0.7);
     points[2] = vec2(0.141, 0.64);
-    points[3] = vec2(0.31, 0.26);
-    points[4] = vec2(0.5 * (mouse.x + 1.0), 0.5 * (mouse.y + 1));
+    points[3] = vec2(0.5 * (player.x + 1.0), 0.5 * (player.y + 1));
+    points[4] = vec2(0.5 * (ball.x + 1.0), 0.5 * (ball.y + 1));
 
 
     float aspectRatio = SCR_WID / SCR_HEI;

@@ -65,8 +65,46 @@ std::vector<DataPoint> readball(const std::string& filename) {
 	file.close();
 	return data;
 }
+std::vector<std::vector<DataPoint>> readPlayers(const std::string& filename) {
+	std::vector<std::vector<DataPoint>> data;
+	std::ifstream file(filename);
+	std::string line;
+
+	while (std::getline(file, line)) {
+		std::stringstream ss(line);
+		std::string item;
+		std::vector<DataPoint> dataPoint;
+
+		//read 22 columns
+		for (unsigned int i = 0; i < 11; i++) {
+			DataPoint temp;
+			if (std::getline(ss, item, ',')) {
+				temp.column1 = std::string(item);
+			}
+			else {
+				std::cout << "Error reading column 1 in line: " << line << std::endl;
+				continue;
+			}
+
+			if (std::getline(ss, item, ',')) {
+				temp.column2 = std::string(item);
+			}
+			else {
+				std::cout << "Error reading column 1 in line: " << line << std::endl;
+				continue;
+			}
+
+			// // std::cout<<temp.column1<<" "<<temp.column2<<std::endl;
+			dataPoint.push_back(temp);
+		}
 
 
+		data.push_back(dataPoint);
+	}
+
+	file.close();
+	return data;
+}
 
 int main() {
 	glfwInit();
@@ -148,7 +186,7 @@ int main() {
 	motion.bind();
 	glUniform1f(glGetUniformLocation(motion.rendererID, "SCR_HEI"), float(height));
 	glUniform1f(glGetUniformLocation(motion.rendererID, "SCR_WID"), float(width));
-	glUniform2fv(glGetUniformLocation(shader.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
+	glUniform2fv(glGetUniformLocation(motion.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
 	glUniform1fv(glGetUniformLocation(motion.rendererID, "movingP"), 1, MathLib::vec2(float(glfwGetTime()), float(glfwGetTime())).value_ptr());
 	motion.unbind();
 
@@ -158,15 +196,22 @@ int main() {
 	glUniform2fv(glGetUniformLocation(test.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
 	test.unbind();
 
+
+	double testpx=-0.5;
+	double testpy=0.0;
 	ball.bind();
 	glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_HEI"), float(height));
 	glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_WID"), float(width));
-	glUniform2fv(glGetUniformLocation(ball.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
+	glUniform2fv(glGetUniformLocation(ball.rendererID, "ball"), 1, MathLib::vec2(mx, my).value_ptr());
+	glUniform2fv(glGetUniformLocation(ball.rendererID, "player"), 1, MathLib::vec2(testpx, testpy).value_ptr());
 	ball.unbind();
 	
 	//ball position data
 	std::vector<DataPoint> balldata = readball("./resources/ballpos.csv");
 	short int bcount = 0;
+	std::vector<std::vector<DataPoint>> playersData = readPlayers("./resources/team1pos.csv");
+	
+
 
 	int animated = 0;
 
@@ -233,21 +278,23 @@ int main() {
 			glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_HEI"), float(height));
 			glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_WID"), float(width));
 			
-			//reset if more than datasize reset
-			//bcount = 0 ? bcount >= balldata.size() : bcount++;
 			// the data is in resolution 3840 × 2160
 			if (bcount < balldata.size())
 			{
+
 				mx = 2 * std::stod(balldata[bcount].column1) / 3840 - 1.0;
 				my = 2 * std::stod(balldata[bcount].column2) / 2160 - 1.0;
+
+				testpx = 2 * std::stod(playersData[bcount][0].column1) / 3840 - 1.0;
+				testpy = 2 * std::stod(playersData[bcount][0].column2) / 2160 - 1.0;
 				bcount++;
 			}
 			else
 				bcount = 0;
 
-			//std::cout << bcount << "\t" << balldata[bcount].column1 << "\t" << balldata[bcount].column2 << std::endl;
-			std::cout << bcount << "\t" << mx << "\t" << my << std::endl;
-			glUniform2fv(glGetUniformLocation(ball.rendererID, "mouse"), 1, MathLib::vec2(mx, my).value_ptr());
+			std::cout << bcount << "\t" << testpx << "\t" << testpy << std::endl;
+			glUniform2fv(glGetUniformLocation(ball.rendererID, "ball"), 1, MathLib::vec2(mx, my).value_ptr());
+			glUniform2fv(glGetUniformLocation(ball.rendererID, "player"), 1, MathLib::vec2(testpx, testpy).value_ptr());
 			ball.unbind();
 			renderer.draw(va, indexBuffer, ball);
 		}
