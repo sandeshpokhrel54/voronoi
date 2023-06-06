@@ -11,6 +11,6 @@ Press 'U' for this display. Animated movement of voronoi points. ![animated](htt
 ![](https://github.com/sandeshpokhrel54/voronoi/blob/main/output/demo.gif)  
 
 ## Football Voronoi
-[![Watch the video](https://github.com/sandeshpokhrel54/voronoi/blob/main/vorrr.png)](https://youtu.be/vt5fpE0bzSY)
+[![Watch the video](https://github.com/sandeshpokhrel54/voronoi/blob/main/vorrr.png)](https://www.youtube.com/watch?v=JfL0ZsjdXvE)
 
 Reference [The Book of Shaders](https://thebookofshaders.com/)
