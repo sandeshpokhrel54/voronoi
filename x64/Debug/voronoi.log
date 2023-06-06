@@ -5,16 +5,19 @@ C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(189,86): warning
 C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(189,82): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(196,84): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(196,80): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(206,83): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(206,79): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(251,87): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(251,84): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(273,86): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(273,82): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(298,43): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(298,35): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(307,85): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(307,81): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(321,88): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(321,84): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(207,83): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(207,79): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(254,87): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(254,84): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(276,86): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(276,82): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(301,42): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(301,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(305,42): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(305,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(315,85): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(315,81): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(330,88): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\sande\OneDrive\Documents\Graphics\voronoi\src\main.cpp(330,84): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   voronoi.vcxproj -> C:\Users\sande\OneDrive\Documents\Graphics\voronoi\x64\Debug\voronoi.exe

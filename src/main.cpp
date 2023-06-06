@@ -199,20 +199,23 @@ int main() {
 
 	double testpx=-0.5;
 	double testpy=0.0;
-	MathLib::vec2 playerpos[11];
+	MathLib::vec2 team1pos[11];
+	MathLib::vec2 team2pos[11];
 	ball.bind();
 	glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_HEI"), float(height));
 	glUniform1f(glGetUniformLocation(ball.rendererID, "SCR_WID"), float(width));
 	glUniform2fv(glGetUniformLocation(ball.rendererID, "ball"), 1, MathLib::vec2(mx, my).value_ptr());
 	//glUniform2fv(glGetUniformLocation(ball.rendererID, "player"), 1, MathLib::vec2(testpx, testpy).value_ptr());
-	glUniform2fv(glGetUniformLocation(ball.rendererID, "team1"), 11, playerpos->value_ptr());
+	glUniform2fv(glGetUniformLocation(ball.rendererID, "team1"), 11, team1pos->value_ptr());
+	glUniform2fv(glGetUniformLocation(ball.rendererID, "team2"), 11, team2pos->value_ptr());
 
 	ball.unbind();
 	
 	//ball position data
 	std::vector<DataPoint> balldata = readball("./resources/ballpos.csv");
 	short int bcount = 0;
-	std::vector<std::vector<DataPoint>> playersData = readPlayers("./resources/team1pos.csv");
+	std::vector<std::vector<DataPoint>> team1Data = readPlayers("./resources/team1pos.csv");
+	std::vector<std::vector<DataPoint>> team2Data = readPlayers("./resources/team2pos.csv");
 	
 
 
@@ -293,9 +296,14 @@ int main() {
 
 				for (unsigned int k = 0; k < 11; k++)
 				{
-					testpx = 2 * std::stod(playersData[bcount][k].column1) / 3840 - 1.0;
-					testpy = 2 * std::stod(playersData[bcount][k].column2) / 2160 - 1.0;
-					playerpos[k] = MathLib::vec2(testpx, testpy);
+					testpx = 2 * std::stod(team1Data[bcount][k].column1) / 3840 - 1.0;
+					testpy = 2 * std::stod(team1Data[bcount][k].column2) / 2160 - 1.0;
+					team1pos[k] = MathLib::vec2(testpx, testpy);
+
+					testpx = 2 * std::stod(team2Data[bcount][k].column1) / 3840 - 1.0;
+					testpy = 2 * std::stod(team2Data[bcount][k].column2) / 2160 - 1.0;
+					team2pos[k] = MathLib::vec2(testpx, testpy);
+
 				}
 				
 				bcount++;
@@ -306,7 +314,8 @@ int main() {
 			//std::cout << bcount << "\t" << testpx << "\t" << testpy << std::endl;
 			glUniform2fv(glGetUniformLocation(ball.rendererID, "ball"), 1, MathLib::vec2(mx, my).value_ptr());
 			//glUniform2fv(glGetUniformLocation(ball.rendererID, "player"), 1, MathLib::vec2(testpx, testpy).value_ptr());
-			glUniform2fv(glGetUniformLocation(ball.rendererID, "team1"), 11, playerpos->value_ptr());
+			glUniform2fv(glGetUniformLocation(ball.rendererID, "team1"), 11, team1pos->value_ptr());
+			glUniform2fv(glGetUniformLocation(ball.rendererID, "team2"), 11, team2pos->value_ptr());
 			ball.unbind();
 			renderer.draw(va, indexBuffer, ball);
 		}

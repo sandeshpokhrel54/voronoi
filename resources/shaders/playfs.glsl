@@ -7,11 +7,12 @@ uniform float SCR_HEI;
 uniform float SCR_WID;
 uniform vec2 ball;
 uniform vec2 team1[11];
+uniform vec2 team2[11];
 void main()
 {
 
     vec3 color = vec3(0.0, 1.0, 0.0);
-    vec2 points[11];
+    vec2 points[23];
     vec2 minpoint = vec2(0.0, 0.0);
     float dist = 1.0;
 
@@ -28,7 +29,12 @@ void main()
     {
         points[j] = vec2(0.5 * (team1[j].x + 1.0), 0.5 * (team1[j].y + 1.0));
     }
-    //points[11] = vec2(0.5 * (ball.x + 1.0), 0.5 * (ball.y + 1));
+
+    for (int j = 0; j < 11; j++)
+    {
+        points[11 + j] = vec2(0.5 * (team2[j].x + 1.0), 0.5 * (team2[j].y + 1.0));
+    }
+    points[22] = vec2(0.5 * (ball.x + 1.0), 0.5 * (ball.y + 1));
 
     float aspectRatio = SCR_WID / SCR_HEI;
     vec2 current = vec2(gl_FragCoord.x / SCR_WID, gl_FragCoord.y / SCR_HEI);
@@ -36,7 +42,7 @@ void main()
     //current.y *= aspectRatio;
     float currentDis;
 
-    for (int i = 0; i < 11; i++)
+    for (int i = 0; i < 23; i++)
     {
         currentDis = distance(current, points[i]);
         //dist = min(dist,currentDis);
